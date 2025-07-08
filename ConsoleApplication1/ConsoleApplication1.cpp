@@ -56,10 +56,10 @@ struct Character {
 };
 static void choseEnemy() {
     std::vector<Enemy>enemies = {
-        {"Gbolin", 50, 5, 0},
-        {"Raider", 80, 8, 1},
-        {"Dog", 40, 10, 0},
-        {"Skeleton", 100, 5, 0}
+        {"Gbolin", 50, 15, 0},
+        {"Raider", 80, 20, 1},
+        {"Dog", 40, 25, 0},
+        {"Skeleton", 200, 20, 0}
     };
     int currentEnemy = rand() % enemies.size();
     std::cout << "Enemey: " << std::endl;
@@ -121,6 +121,8 @@ void fight() {
                 break;
             case 2:
                 blockState = true;
+                cout << "You are now in block state. The next incoming attack is negated fully." << endl;
+
                 break;
             case 3:
                 cout << "Your abilites are: ";
@@ -155,7 +157,7 @@ void fight() {
         cout << "\t Your stats: " << endl;
         cout << "\t \t" << currHealth << endl;
         cout << "\t Enemy stats: " << endl;
-        cout << "\t \t" << currHealth << endl;
+        cout << "\t \t" << healt << endl;
 
 
     } while (healt > 0);
@@ -165,7 +167,7 @@ void useAbility(std::string s) {
         if (ability == s) {
             if (s == "Slash") {
                 std::cout << "Youd dealt massive damage with the slash ability: " << currDmg * 2 << std::endl;
-                healt - currDmg * 2;
+                healt -= currDmg * 2;
             }
             else if (s == "Shield Block") {
                 dmgNegation = 15;
@@ -192,7 +194,7 @@ void enemyTurn(bool isBlocking) {
     using namespace std;
     cout << "It's the turn of the enemy" << std::endl;
     if (!isBlocking) {
-        currHealth - (dmg - dmgNegation);
+        currHealth -= (dmg - dmgNegation);
     }
     cout << "End of turn" << std::endl;
 }
