@@ -1,2 +1,4 @@
 ﻿  ConsoleApplication1.cpp
+C:\Users\msaso\Desktop\CppPlaygroud\learncpp\ConsoleApplication1\ConsoleApplication1.cpp(160,23): warning C4552: '-': result of expression not used
+C:\Users\msaso\Desktop\CppPlaygroud\learncpp\ConsoleApplication1\ConsoleApplication1.cpp(187,20): warning C4552: '-': result of expression not used
   ConsoleApplication1.vcxproj -> C:\Users\msaso\Desktop\CppPlaygroud\learncpp\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe

@@ -4,6 +4,10 @@
 
 typedef std::vector<std::string> stringVector;
 
+void useAbility(std::string s);
+std::string fleeFromCombat();
+void enemyTurn(bool isBlocking);
+
 #pragma region StatCheck
 std::string currName;
 int currDmg;
@@ -19,6 +23,7 @@ int dmg;
 int magic;
 #pragma endregion
 
+int dmgNegation = 0;
 
 struct Boss {
     std::string name;
@@ -27,6 +32,7 @@ struct Boss {
     int magic;
     stringVector abilities;
 };
+
 struct Enemy {
     std::string name;
     int healt;
@@ -98,6 +104,7 @@ void fight() {
     int fightChoice;
     int abilityChoice;
     bool blockState = false;
+    int flee = rand() % 2;
 
     std::string wantingToUse;
 
@@ -127,7 +134,7 @@ void fight() {
                 useAbility(wantingToUse);
                 break;
             case 4:
-                int flee = rand() % 2;
+                
                 if (flee == 1) {
                     cout << fleeFromCombat();
                     break;
@@ -137,13 +144,57 @@ void fight() {
                 cout << "You did nothing! IDIOT" << endl;
                 break;
         }
+        cout << "Enemies turn now! Prepare!" << std::endl;
+
+        enemyTurn(blockState);
+
+        blockState = false;
+        dmgNegation = 0;
+
+        cout << "End of turn stats: " << endl;
+        cout << "\t Your stats: " << endl;
+        cout << "\t \t" << currHealth << endl;
+        cout << "\t Enemy stats: " << endl;
+        cout << "\t \t" << currHealth << endl;
+
+
     } while (healt > 0);
 }
 void useAbility(std::string s) {
-
+    for (std::string ability : currAbilities) {
+        if (ability == s) {
+            if (s == "Slash") {
+                std::cout << "Youd dealt massive damage with the slash ability: " << currDmg * 2 << std::endl;
+                healt - currDmg * 2;
+            }
+            else if (s == "Shield Block") {
+                dmgNegation = 15;
+            }
+            else if (s == "Fireball") {
+                healt -= 75;
+            }
+            else if (s == "Teleport") {
+                std::cout << "You teleported!" << std::endl;
+            }
+            else if (s == "Backstab") {
+                healt = 55;
+            }
+            else if (s == "Stealth") {
+                std::cout << "You are in stealth state" << std::endl;
+            }
+        }
+    }
 }
 std::string fleeFromCombat() {
     return "You flee the combat!";
+}
+void enemyTurn(bool isBlocking) {
+    using namespace std;
+    cout << "It's the turn of the enemy" << std::endl;
+    if (!isBlocking) {
+        currHealth - (dmg - dmgNegation);
+    }
+    cout << "End of turn" << std::endl;
 }
 int main()
 {
@@ -152,6 +203,8 @@ int main()
     choseCharacter();
 
     choseEnemy();
+
+    fight();
 
     #pragma region Unit Test for stat selection
     /*
